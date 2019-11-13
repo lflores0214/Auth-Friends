@@ -5,9 +5,15 @@ import TextField from "@material-ui/core/TextField";
 import Button from "../theme/Button";
 
 class AddFriend extends React.Component {
-  state = {
-    friends: [{ name: "", age: "", email: "" }]
-  };
+  constructor(props){
+    super(props);
+    this.state = {
+      friends: [{ name: "", age: "", email: "" }]
+    }
+  }
+  // state = {
+  //   friends: [{ name: "", age: "", email: "" }]
+  // };
 
   addFriend = (name, age, email) => {
     const friend = { name: name, age: age, email: email };
@@ -56,6 +62,8 @@ class AddFriend extends React.Component {
       this.state.friends.age,
       this.state.friends.email
     );
+    this.setState({friends:{name: "", age:"", email:""}})
+    this.props.history.push("/friends")
   };
 
   render() {

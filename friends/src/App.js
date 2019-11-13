@@ -18,7 +18,8 @@ const Nav = styled.nav`
   border-radius: 5px;
 `;
 const LinkCont = styled.div`
-  width: 20%;
+  width: 25%;
+
   display: flex;
   justify-content: space-between;
   align-content: center;
@@ -28,7 +29,7 @@ const NavLink = styled(Link)`
   margin: 1%;
   text-decoration: none;
   color: whitesmoke;
-  margin-top: 12%;
+  margin-top: 5%;
 `;
 
 const Title = styled.legend`

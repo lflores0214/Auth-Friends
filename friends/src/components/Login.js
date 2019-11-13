@@ -6,13 +6,23 @@ import Button from "../theme/Button"
 
 
 class Login extends React.Component {
-  state = {
-    creds: {
-      username: "",
-      password: ""
-    },
-    isLoggedIn: false
-  };
+  constructor(props){
+    super(props);
+    this.state={
+      creds: {
+        username: "",
+        password: ""
+      },
+      isLoggedIn: false
+    };
+  }
+  // state = {
+  //   creds: {
+  //     username: "",
+  //     password: ""
+  //   },
+  //   isLoggedIn: false
+  // };
 
   useStyles = makeStyles(theme => ({
     container: {
@@ -21,7 +31,7 @@ class Login extends React.Component {
     },
     textField: {
       marginLeft: theme.spacing(1),
-      marginRight: theme.spacing(1)
+      marginRight: theme.spacing(1),
     },
     dense: {
       marginTop: theme.spacing(2)
@@ -35,7 +45,7 @@ class Login extends React.Component {
 
   logout = e => {
     e.preventDefault();
-    localStorage.clear();
+    localStorage.clear("token");
     this.setState({ ...this.state, isLoggedIn: false });
   };
 
@@ -60,7 +70,8 @@ class Login extends React.Component {
   };
   handleSubmit = e => {
     e.preventDefault();
-    this.login();
+    this.login()
+    this.props.history.push("/friends")
   };
 
   componentDidMount() {
