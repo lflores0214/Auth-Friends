@@ -1,5 +1,8 @@
 import React from "react";
-import axios from "axios";
+import { axiosWithAuth } from "./Friends";
+import { makeStyles } from "@material-ui/core/styles";
+import TextField from "@material-ui/core/TextField";
+import Button from "../theme/Button";
 
 class AddFriend extends React.Component {
   state = {
@@ -7,24 +10,32 @@ class AddFriend extends React.Component {
   };
 
   addFriend = (name, age, email) => {
-    // const friend = { name: name, age: age, email: email };
-    axios
-      .post(
-        "http://localhost:5000/api/friends",
-        {
-          name,
-          age,
-          email
-        },
-        {
-          headers: {
-            authorization: localStorage.getItem("token")
-          }
-        }
-      )
+    const friend = { name: name, age: age, email: email };
+    const authAxios = axiosWithAuth();
+    authAxios
+      .post("http://localhost:5000/api/friends", friend)
+
+      // axios
+      //   .post(
+      //     "http://localhost:5000/api/friends",
+      //     {
+      //       name,
+      //       age,
+      //       email
+      //     },
+      //     {
+      //       headers: {
+      //         authorization: localStorage.getItem("token")
+      //       }
+      //     }
+      //   )
 
       .then(response => {
-        console.log("SUCCESS", response);
+        console.log("SUCCESS", response.data);
+        localStorage.setItem(
+          "friend",
+          JSON.stringify({ name: name, age: age, email: email })
+        );
       })
       .catch(error => {
         console.log("ERROR", error);
@@ -49,38 +60,43 @@ class AddFriend extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="form">
         <form onSubmit={this.handleSubmit}>
-          <label>
-            {" "}
-            Name:
-            <input
-              type="text"
-              name="name"
-              value={this.state.friends.name}
-              onChange={this.handleChange}
-            />
-          </label>
-          <label>
-            Age:
-            <input
-              type="text"
-              name="age"
-              value={this.state.friends.age}
-              onChange={this.handleChange}
-            />
-          </label>
-          <label>
-            {" "}
-            Email:
-            <input
-              type="text"
-              name="email"
-              value={this.state.friends.email}
-              onChange={this.handleChange}
-            />
-          </label>
-          <button type="submit">Add Friend</button>
+          <legend>Add A Friend</legend>
+          <TextField
+          id="outlined-name"
+          margin="normal"
+          variant="outlined"
+          label="Name"
+            type="text"
+            name="name"
+            value={this.state.friends.name}
+            onChange={this.handleChange}
+          />
+
+          <TextField
+          id="outlined-name"
+          margin="normal"
+          variant="outlined"
+          label="Age"
+            type="text"
+            name="age"
+            value={this.state.friends.age}
+            onChange={this.handleChange}
+          />
+
+          <TextField
+          id="outlined-name"
+          margin="normal"
+          variant="outlined"
+          label="Email"
+            type="text"
+            name="email"
+            value={this.state.friends.email}
+            onChange={this.handleChange}
+          />
+
+          <Button type="submit">Add Friend</Button>
         </form>
       </div>
     );

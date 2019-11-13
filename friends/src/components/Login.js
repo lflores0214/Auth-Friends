@@ -1,5 +1,9 @@
 import React from "react";
 import axios from "axios";
+import { makeStyles } from "@material-ui/core/styles";
+import TextField from "@material-ui/core/TextField";
+import Button from "../theme/Button"
+
 
 class Login extends React.Component {
   state = {
@@ -10,10 +14,29 @@ class Login extends React.Component {
     isLoggedIn: false
   };
 
+  useStyles = makeStyles(theme => ({
+    container: {
+      display: "flex",
+      flexWrap: "wrap"
+    },
+    textField: {
+      marginLeft: theme.spacing(1),
+      marginRight: theme.spacing(1)
+    },
+    dense: {
+      marginTop: theme.spacing(2)
+    },
+    menu: {
+      width: 200
+    }
+    
+  }));
+  
+
   logout = e => {
     e.preventDefault();
     localStorage.clear();
-    this.setState({...this.state, isLoggedIn: false});
+    this.setState({ ...this.state, isLoggedIn: false });
   };
 
   login = () => {
@@ -50,31 +73,35 @@ class Login extends React.Component {
 
   render() {
     return (
-      <div>
-        <h2>{this.state.isLoggedIn ? "Logged in" : "Please login"}</h2>
+      <div className="form">
+        <legend>{this.state.isLoggedIn ? "Logged in" : "Please login"}</legend>
         <form onSubmit={this.handleSubmit}>
-          <label htmlFor="username">
-            {" "}
-            Username:
-            <input
-              type="text"
-              name="username"
-              value={this.state.creds.username}
-              onChange={this.handleChange}
-            />
-          </label>
-          <label htmlFor="password">
-            {" "}
-            Password:
-            <input
-              type="password"
-              name="password"
-              value={this.state.creds.password}
-              onChange={this.handleChange}
-            />
-          </label>
-          <button type="submit">Login</button>
-          <button onClick={this.logout}>Logout</button>
+          <TextField
+            className={this.useStyles.textfield}
+            id="outlined-name"
+            margin="normal"
+            variant="outlined"
+            label="Username"
+            type="text"
+            name="username"
+            value={this.state.creds.username}
+            onChange={this.handleChange}
+          />
+
+          <TextField
+            className={this.useStyles.textfield}
+            id="outline-name"
+            margin="normal"
+            variant="outlined"
+            label="Password"
+            type="password"
+            name="password"
+            value={this.state.creds.password}
+            onChange={this.handleChange}
+          />
+
+          <Button color="blue" type="submit">Login</Button>
+          <Button color="red" onClick={this.logout}>Logout</Button>
         </form>
       </div>
     );
